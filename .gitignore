@@ -1,0 +1,41 @@
+__pycache__
+.env
+.venv
+instance
+.DS_Store
+
+# touch .gitignore
+# files with a dot (.) preceding their name are hidden by default
+# hidden files are not visible when using the `ls` command alone
+# to reveal these concealed files, use `ls -a` instead
+
+# ------ FILES ------
+# # ignore the top-level .env file(s) but not the .env files in subdirectories:
+# .env
+# .venv
+# .DS_Store
+# .DS_Store files are created by the macOS operating system. They are invisible files stored in folders to store custom attributes of a folder's window, such as the position of icons or the choice of a background image. These files are specific to macOS and are not necessary for the functionality of your project.
+
+# # ignore all markdown files that end with a .md file extension in the current directory where the .gitignore file is located (it doesn't automatically extend to files in subdirectories):
+# *.md
+
+# # ignore all .env files in any directory, including the root and subdirectories:
+# **/.env
+# a single asterisk (*) which matches only one directory level
+# two asterisks (**) can match zero or more directories deep within the repo
+# Git does not follow symbolic links when accessing a .gitignore file
+
+# # does not ignore the README.md file:
+# !README.md
+
+
+# ------ DIRECTORIES ------
+# # ignore the `__pycache__` directory and all its contents:
+# __pycache__/
+# the __pycache__ directory is automatically created by Python to improve the speed of subsequent imports by avoiding the need to recompile the source code every time
+
+# # ignore all files and directories that have a name starting with img:
+# img*
+
+# # to ignore an entire directory with all its contents (with slash at the end):
+# env/
