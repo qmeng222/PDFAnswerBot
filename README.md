@@ -18,6 +18,7 @@
 2. Upgrade the pip package manager to the latest version within the current Python environment: `python -m pip install --upgrade pip`
 3. Install libraries/packages/dependencies: `pip install -r requirements.txt`
 4. Initialize the database (if ever need to clear out all the data from this application, just run this command again): `flask --app app.web init-db`
+5. Start the server with `python app.py`
 
 ## Running the app
 
@@ -33,7 +34,7 @@ If you need to stop them, select the terminal window the process is running in a
 
 To reset the database: `flask --app app.web init-db`
 
-I've created an account using the email `test@test.com` and the password `123abc`.
+I've created an account using the email `user@test.com` and the password `abc123`.
 
 ## Resources:
 

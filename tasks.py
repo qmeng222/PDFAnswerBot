@@ -1,3 +1,5 @@
+# this file defines some shortcut commands to run the server (like `inv dev`)
+
 import os
 from invoke import task
 
