@@ -3,8 +3,9 @@
 ## About:
 
 - Description: AI-powered question answering for PDFs with user feedback.
-- Tech stack: ChatGPT, LangChain, Python, Flask, JavaScript, HTML
 - Overview:
+  - Tech stack: ChatGPT, LangChain, Python, Flask, JavaScript, HTML
+  - Vector database: Pinecone
   - App workflow:
     ![app workflow](images/PDFAnswerBot_workflow.png)
 
@@ -18,7 +19,7 @@
 2. Upgrade the pip package manager to the latest version within the current Python environment: `python -m pip install --upgrade pip`
 3. Install libraries/packages/dependencies: `pip install -r requirements.txt`
 4. Initialize the database (if ever need to clear out all the data from this application, just run this command again): `flask --app app.web init-db`
-5. Start the server with `python app.py`
+<!-- 5. Start the file upload server with `python app.py` -->
 
 ## Running the app
 
