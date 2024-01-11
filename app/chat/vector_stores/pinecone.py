@@ -19,8 +19,9 @@ config = dotenv_values(".env") # return a dict with the values parsed from the .
 # initialize Pinecone client:
 pinecone.init(
   # api_key=os.getenv("PINECONE_API_KEY"),
+  # environment=os.getenv("PINECONE_ENV_NAME")
   api_key=config["PINECONE_API_KEY"],
-  environment=os.getenv("PINECONE_ENV_NAME")
+  environment=config["PINECONE_ENV_NAME"]
 )
 
 # create vector store (for storing docs):
