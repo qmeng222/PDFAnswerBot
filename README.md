@@ -3,9 +3,15 @@
 ## About:
 
 - Description: AI-powered question answering for PDFs with user feedback.
+- Tech stack:
+  - LLM: ChatGPT, LangChain
+  - Frontend: JavaScript, HTML, CSS
+  - Backend:
+    - Language & framework: Python, Flask
+    - Asynchronous job queue: Celery (Python specific)
+    - Message broker: Redis
+    - Vector database: Pinecone
 - Overview:
-  - Tech stack: ChatGPT, LangChain, Python, Flask, JavaScript, HTML
-  - Vector database: Pinecone
   - App workflow:
     ![app workflow](images/PDFAnswerBot_workflow.png)
 
@@ -19,15 +25,17 @@
 2. Upgrade the pip package manager to the latest version within the current Python environment: `python -m pip install --upgrade pip`
 3. Install libraries/packages/dependencies: `pip install -r requirements.txt`
 4. Initialize the database (if ever need to clear out all the data from this application, just run this command again): `flask --app app.web init-db`
-<!-- 5. Start the file upload server with `python app.py` -->
+<!-- Start the file upload server with `python app.py` -->
+5. Install Redis on the macOS system using Homebrew: `brew install redis`
 
 ## Running the app
 
 There are 3 separate processes that need to be running for the app to work:
+![background jobs](images/background_jobs.png)
 
 - invoke the Python server (in development mode): `inv dev`
+- launch the Redis server (the message broker), allowing it to accept connections and handle data storage and retrieval: `redis-server`
 - invoke the worker: `inv devworker`
-- run Redis: `redis-server`
 
 If you stop any of these processes, you will need to start them back up!
 
