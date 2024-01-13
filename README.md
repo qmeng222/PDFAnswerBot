@@ -34,7 +34,19 @@ There are 3 separate processes that need to be running for the app to work:
 ![background jobs](images/background_jobs.png)
 
 - invoke the Python server (in development mode): `inv dev`
-- launch the Redis server (the message broker), allowing it to accept connections and handle data storage and retrieval: `redis-server`
+- launch the Redis server (the message broker), allowing it to accept connections and handle data storage and retrieval:
+
+  ```
+  # launch the Redis server:
+  redis-server
+
+  # (only if needed) identify the process using port 6379:
+  lsof -i :6379
+
+  # (only if needed) terminate a process:
+  kill <PID>
+  ```
+
 - invoke the worker: `inv devworker`
 
 If you stop any of these processes, you will need to start them back up!

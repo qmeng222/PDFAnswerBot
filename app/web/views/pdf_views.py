@@ -21,13 +21,13 @@ def list():
 @handle_file_upload
 def upload_file(file_id, file_path, file_name):
     res, status_code = files.upload(file_path)
-    if status_code >= 400:
+    if status_code >= 400: # client errors
         return res, status_code
 
     pdf = Pdf.create(id=file_id, name=file_name, user_id=g.user.id)
 
-    # TODO: Defer this to be processed by the worker
-    process_document(pdf.id)
+    # instead of executing `process_document` (cmd+clike to view this func) immediately, the dalay approach is to create a job first and dispatch that job to a worker for processing
+    process_document.delay(pdf.id)
 
     return pdf.as_dict()
 

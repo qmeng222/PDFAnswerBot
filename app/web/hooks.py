@@ -68,6 +68,8 @@ def load_logged_in_user():
 def handle_file_upload(fn):
     @functools.wraps(fn)
     def wrapped(*args, **kwargs):
+        # a single star unpacks a sequence or collection into positional args: s = add(*values)
+        # the double star unpacks a dictionary, providing values for keyword args: values = { 'a': 1, 'b': 2 }, s = add(**values)
         file = request.files["file"]
         file_id = str(uuid.uuid4())
 
