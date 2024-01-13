@@ -27,6 +27,7 @@ def upload_file(file_id, file_path, file_name):
     pdf = Pdf.create(id=file_id, name=file_name, user_id=g.user.id)
 
     # instead of executing `process_document` (cmd+clike to view this func) immediately, the dalay approach is to create a job first and dispatch that job to a worker for processing
+    # process_document(pdf.id)
     process_document.delay(pdf.id)
 
     return pdf.as_dict()

@@ -62,5 +62,6 @@ I've created an account using the email `user@test.com` and the password `abc123
 1. [.gitignore File – How to Ignore Files and Folders in Git](https://www.freecodecamp.org/news/gitignore-file-how-to-ignore-files-and-folders-in-git/)
 2. [Keyword Argument & Positional Argument in Python](https://www.geeksforgeeks.org/keyword-and-positional-argument-in-python/)
 3. [python-dotenv: Load configuration without altering the environment](https://pypi.org/project/python-dotenv/)
-4. [Pinecone Examples](https://docs.pinecone.io/page/examples)
-5. [Pinecone AI Support](https://support.pinecone.io/hc/en-us)
+4. [Pinecone Documentation](https://docs.pinecone.io/)
+5. [Pinecone Examples](https://docs.pinecone.io/page/examples)
+6. [Pinecone AI Support](https://support.pinecone.io/hc/en-us)
