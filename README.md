@@ -14,6 +14,13 @@
 - Overview:
   - App workflow:
     ![app workflow](images/PDFAnswerBot_workflow.png)
+  - The Python server:
+    ![Python server](images/python_server.png)
+  - Persistent message storage:
+    ![persistent message storage](images/store_msgs_in_db.png)
+  - Conversational retrieval chain:
+    ![conversational retrieval chain](images/conversational_retrieval_chain1.png)
+    ![conversational retrieval chain](images/conversational_retrieval_chain2.png)
 
 ## Setup:
 
