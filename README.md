@@ -12,6 +12,7 @@
     - Message broker: Redis
     - Vector database: Pinecone
 - Overview:
+
   - App workflow:
     ![app workflow](images/PDFAnswerBot_workflow.png)
   - The Python server:
@@ -25,6 +26,8 @@
     ![conversational retrieval chain](images/conversational_retrieval_chain2.png)
   - Streaming text generation:
     ![streaming text generation](images/streaming_text_generation.png)
+    `streaming` controls how OpenAI responds to LangChain, and the way to call the model controls how OpenAI resonds to LangChain + how LangChain responds to the user:
+    ![transmission of a response](images/streaming_response.png)
 
 ## Setup:
 
