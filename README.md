@@ -23,6 +23,8 @@
   - Conversational retrieval chain:
     ![conversational retrieval chain](images/conversational_retrieval_chain1.png)
     ![conversational retrieval chain](images/conversational_retrieval_chain2.png)
+  - Streaming text generation:
+    ![streaming text generation](images/streaming_text_generation.png)
 
 ## Setup:
 
