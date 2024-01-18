@@ -9,35 +9,37 @@ from dotenv import load_dotenv # for loading variables
 
 load_dotenv() # load environment variables from .env
 
-# ------ queue ------
-# create an instance of the Queue (FIFO) class:
-queue = Queue()
+# # ------ queue ------
+# # create an instance of the Queue (FIFO) class:
+# queue = Queue()
 
 
 # ------ streaming handler ------
 class StreamingHandler(BaseCallbackHandler): # `StreamingHandler` inherits behavior from `BaseCallbackHandler`
-    # define a callback method called `on_llm_new_token` which takes a token as an argument and prints it:
+    # init func to receive the queue and assign it to an instance variable:
+    def __init__(self, queue):
+        self.queue = queue
+
+    # define a callback method that takes a token and puts it into the queue:
     def on_llm_new_token(self, token, **kwargs):
         # print(token)
-        queue.put(token)
-
+        self.queue.put(token)
 
     # two scenarios to end the while loop:
-
     # 1. callback method to notify the end of the generated response:
     def on_llm_end(self, response, **kwargs):
-        queue.put(None) # add None to the queue
+        self.queue.put(None) # add None to the queue
 
     # 2. callback method to handle errors during response generation (eg: API key is invalid, ...)
     def on_llm_error(self, error, **kwargs):
-        queue.put(None) # add None to the queue as well
+        self.queue.put(None) # add None to the queue as well
 
 
 # ------ model ------
 # create an instance of the ChatOpenAI class:
 chat = ChatOpenAI(
    streaming=True, # control how OpenAI responds to LangChain
-   callbacks=[StreamingHandler()]
+   # callbacks=[StreamingHandler()]
 )
 
 
@@ -52,9 +54,13 @@ prompt = ChatPromptTemplate.from_messages([ # a list of tuples
 class StreamingChain(LLMChain): # inherit functionality from the LLMChain class
     # define a `stream` method to return a generator (a generator function produces values one at a time using the yield keyword):
     def stream(self, input): # `self` refers to the instance of the class
+        # create a queue and handler for every single user/call:
+        queue = Queue()
+        handler = StreamingHandler(queue) # an instance of StreamingHandler is created with queue as an argument
+
         # define a `task`` func separately:
         def task():
-            self(input) # run the chain
+            self(input, callbacks=[handler]) # run the chain
 
         # (in the main stream) when `thread.start()` is called, the `task` func runs concurrently:
         Thread(target=task).start()
