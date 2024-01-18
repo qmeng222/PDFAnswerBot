@@ -17,9 +17,20 @@ queue = Queue()
 # ------ streaming handler ------
 class StreamingHandler(BaseCallbackHandler): # `StreamingHandler` inherits behavior from `BaseCallbackHandler`
     # define a callback method called `on_llm_new_token` which takes a token as an argument and prints it:
-    def on_llm_new_token(self, token, **kwargs): # **kwargs indicates that it can accept additional keyword arguments (although they might not be used in this snippet)
+    def on_llm_new_token(self, token, **kwargs):
         # print(token)
         queue.put(token)
+
+
+    # two scenarios to end the while loop:
+
+    # 1. callback method to notify the end of the generated response:
+    def on_llm_end(self, response, **kwargs):
+        queue.put(None) # add None to the queue
+
+    # 2. callback method to handle errors during response generation (eg: API key is invalid, ...)
+    def on_llm_error(self, error, **kwargs):
+        queue.put(None) # add None to the queue as well
 
 
 # ------ model ------
@@ -51,7 +62,9 @@ class StreamingChain(LLMChain): # inherit functionality from the LLMChain class
         # in the main stream:
         while True:
             token = queue.get() # just wait if the queue is empty
-            yield token
+            if token is None: # end of response
+                break
+            yield token # generate one word token at a time
 # now any instance of the StreamingChain class has a `stream` method
 
 chain = StreamingChain(llm=chat, prompt=prompt) # an instance of the StreamingChain class
