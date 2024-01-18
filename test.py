@@ -2,35 +2,56 @@ from langchain.prompts import ChatPromptTemplate # prompt
 from langchain.chat_models import ChatOpenAI # model
 from langchain.chains import LLMChain
 from langchain.callbacks.base import BaseCallbackHandler
+from queue import Queue # from the queue module import the Queue class
+from threading import Thread # for managing multithreads (multiple threads run concurrently within a single program, allowing for parallel execution of tasks)
 from dotenv import load_dotenv # for loading variables
+
 
 load_dotenv() # load environment variables from .env
 
-# `StreamingHandler`` inherits behavior from `BaseCallbackHandler`:
-class StreamingHandler(BaseCallbackHandler):
+# ------ queue ------
+# create an instance of the Queue (FIFO) class:
+queue = Queue()
+
+
+# ------ streaming handler ------
+class StreamingHandler(BaseCallbackHandler): # `StreamingHandler` inherits behavior from `BaseCallbackHandler`
     # define a callback method called `on_llm_new_token` which takes a token as an argument and prints it:
     def on_llm_new_token(self, token, **kwargs): # **kwargs indicates that it can accept additional keyword arguments (although they might not be used in this snippet)
         # print(token)
-        pass
+        queue.put(token)
 
+
+# ------ model ------
 # create an instance of the ChatOpenAI class:
 chat = ChatOpenAI(
    streaming=True, # control how OpenAI responds to LangChain
    callbacks=[StreamingHandler()]
 )
 
+
+# ------ prompt ------
 # create a template (this type of template is specifically designed for creating conversations) that consists of a single message from the "human" role:
 prompt = ChatPromptTemplate.from_messages([ # a list of tuples
     ("human", "{content}") # {content} placeholder
 ])
 
-# define a class called StreamingChain that extends/inherits from LLMChain (inherits functionality from the LLMChain class):
-class StreamingChain(LLMChain):
+
+# ------ streaming chain ------
+class StreamingChain(LLMChain): # inherit functionality from the LLMChain class
     # define a `stream` method to return a generator (a generator function produces values one at a time using the yield keyword):
     def stream(self, input): # `self` refers to the instance of the class
-        print("🌈", self(input)) # the res of calling the chain
-        yield 'hi'
-        yield 'there'
+        # define a `task`` func separately:
+        def task():
+            self(input) # run the chain
+
+        # (in the main stream) when `thread.start()` is called, the `task` func runs concurrently:
+        Thread(target=task).start()
+
+        # in the main stream:
+        while True:
+            token = queue.get() # just wait if the queue is empty
+            yield token
 # now any instance of the StreamingChain class has a `stream` method
 
 chain = StreamingChain(llm=chat, prompt=prompt) # an instance of the StreamingChain class
