@@ -51,8 +51,11 @@ prompt = ChatPromptTemplate.from_messages([ # a list of tuples
 
 
 # ------ streaming chain ------
-class StreamingChain(LLMChain): # inherit functionality from the LLMChain class
-    # define a `stream` method to return a generator (a generator function produces values one at a time using the yield keyword):
+# # 1. inheritance approach:
+# class StreamingChain(LLMChain): # inherit functionality from the LLMChain class
+# # define a `stream` method to return a generator (a generator function produces values one at a time using the yield keyword):
+# 2. Mixin approach: mix in or add functionality to a class without using traditional inheritance:
+class StreamableChain:
     def stream(self, input): # `self` refers to the instance of the class
         # create a queue and handler for every single user/call:
         queue = Queue()
@@ -72,6 +75,10 @@ class StreamingChain(LLMChain): # inherit functionality from the LLMChain class
                 break
             yield token # generate one word token at a time
 # now any instance of the StreamingChain class has a `stream` method
+
+# (Mixin approach) extend StreamableChain and LLMChain:
+class StreamingChain(StreamableChain, LLMChain):
+    pass
 
 chain = StreamingChain(llm=chat, prompt=prompt) # an instance of the StreamingChain class
 
