@@ -5,7 +5,7 @@ from app.chat.vector_stores.pinecone import build_retriever # import func from t
 from app.chat.chains.retrieval import StreamingConversationalRetrievalChain # chain
 
 
-def build_chat(chat_args: ChatArgs):
+def build_chat(chat_args: ChatArgs): # colon is used to indicate the type of the parameter
     """
     :param chat_args: ChatArgs object containing conversation_id, pdf_id, metadata, and streaming flag.
     :return: A chain

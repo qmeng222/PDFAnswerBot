@@ -3,4 +3,4 @@
 from langchain.chat_models import ChatOpenAI # import class
 
 def build_llm(chat_args): # take in an obj containing info related to a chat
-    return ChatOpenAI() # return the newly created instance of the ChatOpenAI class
+    return ChatOpenAI(streaming=chat_args.streaming) # return the newly created instance of the ChatOpenAI class

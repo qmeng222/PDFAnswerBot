@@ -1,3 +1,4 @@
+from flask import current_app
 from queue import Queue # from the queue module import the Queue class
 from threading import Thread # for managing multithreads (multiple threads run concurrently within a single program, allowing for parallel execution of tasks)
 from app.chat.callbacks.stream import StreamingHandler # import from file
@@ -15,11 +16,13 @@ class StreamableChain:
         handler = StreamingHandler(queue) # an instance of StreamingHandler is created with queue as an argument
 
         # define a `task`` func separately:
-        def task():
+        def task(app_context):
+            app_context.push()
             self(input, callbacks=[handler]) # run the chain
 
         # (in the main stream) when `thread.start()` is called, the `task` func runs concurrently:
-        Thread(target=task).start()
+        # Thread(target=task).start()
+        Thread(target=task, args=[current_app.app_context()]).start()
 
         # in the main stream:
         while True:
