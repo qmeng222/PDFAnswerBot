@@ -1,3 +1,4 @@
+from langchain.chat_models import ChatOpenAI
 from app.chat.models import ChatArgs
 from app.chat.llms.chatopenai import build_llm # model
 from app.chat.memories.sql_memory import build_memory # memory
@@ -16,9 +17,11 @@ def build_chat(chat_args: ChatArgs): # colon is used to indicate the type of the
     llm = build_llm(chat_args)
     memory = build_memory(chat_args)
     retriever = build_retriever(chat_args)
+    condense_question_llm = ChatOpenAI(streaming=False) # False by default
 
     return StreamingConversationalRetrievalChain.from_llm(
         llm=llm,
+        condense_question_llm=condense_question_llm,
         memory=memory,
         retriever=retriever
     )
