@@ -28,6 +28,10 @@
     ![streaming text generation](images/streaming_text_generation.png)
     `streaming` controls how OpenAI responds to LangChain, and the way to call the model controls how OpenAI resonds to LangChain + how LangChain responds to the user:
     ![transmission of a response](images/streaming_response.png)
+  - Random component parts in retrieval chain:
+    ![random component parts in retrieval chain](images/random_variations_of_component_parts.png)
+  - The retrieval chain component maps:
+    ![retrieval chain component maps](images/component_maps.png)
 
 ## Setup:
 

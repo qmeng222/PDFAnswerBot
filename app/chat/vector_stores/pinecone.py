@@ -34,8 +34,11 @@ vector_store = Pinecone.from_existing_index(
 # # one feature shared by various vector stores, such as Chroma and Pinecone, is the capability to transform them into retrievers
 # # build a retriever out of the vector store:
 # vector_store.as_retriever()
-def build_retriever(chat_args):
-    search_kwargs = {"filter": { "pdf_id": chat_args.pdf_id }}
+def build_retriever(chat_args, k):
+    search_kwargs = {
+        "filter": { "pdf_id": chat_args.pdf_id },
+        "k": k
+    }
     return vector_store.as_retriever(
         search_kwargs=search_kwargs
     )

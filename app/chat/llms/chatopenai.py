@@ -2,5 +2,9 @@
 
 from langchain.chat_models import ChatOpenAI # import class
 
-def build_llm(chat_args): # take in an obj containing info related to a chat
-    return ChatOpenAI(streaming=chat_args.streaming) # return the newly created instance of the ChatOpenAI class
+def build_llm(chat_args, model_name): # take in an obj containing info related to a chat
+    # return the newly created instance of the ChatOpenAI class:
+    return ChatOpenAI(
+        streaming=chat_args.streaming,
+        model_name=model_name # gpt-3.5-turbo if not specified
+    )
