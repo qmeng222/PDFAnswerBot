@@ -1,6 +1,28 @@
 from app.chat.redis import client # import Redis client from the redis.py file
 
 
+def random_component_by_score(component_type, component_map):
+    # make sure the `component_type` is 'llm', 'retriever', or 'memory':
+    if component_type not in ["llm", "retriever", "memory"]:
+        raise ValueError("Invalid component_type")
+
+    # (from Redis) get all k-v pairs of the hash containing the score total for the given commponent_type:
+    # hash name: llm/retriever/memory_score_values
+    values = client.hgetall(f"{component_type}_score_values") # `values` is a dict
+    # (from Redis) get all k-v pairs of the hash containing the score count for the given component_type:
+    counts = client.hgetall(f"{component_type}_score_counts") # `counts` is a dict
+    print("1️⃣2️⃣3️⃣")
+
+    print("✅", values, counts) # the values of the dict are in string type
+
+    # get all the valid component names from the component map
+
+    # loop over those valid names and use them to calculate the average score for each
+    # Add average score to a dictionary
+
+    # do a weighted random selection
+
+
 def score_conversation(
     conversation_id: str, score: float, llm: str, retriever: str, memory: str
 ) -> None:

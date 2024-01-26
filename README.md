@@ -83,7 +83,7 @@ If you need to stop them, select the terminal window the process is running in a
 
 To reset the database: `flask --app app.web init-db`
 
-I've created an account using the email `user@test.com` and the password `abc123`.
+Start by creating an account using the following credentials for example: email `user@test.com`, password `abc123`
 
 ## Resources:
 
