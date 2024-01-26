@@ -1,3 +1,4 @@
+import random
 from app.chat.redis import client # import Redis client from the redis.py file
 
 
@@ -29,6 +30,14 @@ def random_component_by_score(component_type, component_map):
     print("3️⃣", avg_scores)
 
     # do a weighted random selection:
+    sum_scores = sum(avg_scores.values())
+    random_val = random.uniform(0, sum_scores) # pick up a random num [0, the sum of all ave scores]
+    # the higher the average score the higher chance of being picked:
+    cumulative = 0
+    for name, score in avg_scores.items():
+        cumulative += score
+        if random_val <= cumulative:
+            return name
 
 
 def score_conversation(
