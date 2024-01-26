@@ -14,11 +14,19 @@ def random_component_by_score(component_type, component_map):
     # (from Redis) get all k-v pairs of the hash containing the score count for the given component_type:
     counts = client.hgetall(f"{component_type}_score_counts") # `counts` is a dict
 
-    print("2️⃣", values, counts) # the values of the dict are in string type
+    print("2️⃣", values, counts) # NOTE: the values of the dict are in string type
 
-    # get all the valid component names from the component map:
+    # get all the valid component names (keys) from the component map:
+    names = component_map.keys()
 
     # loop over those valid names and use them to calculate the average score for each & add average score to a dictionary:
+    avg_scores = {}
+    for name in names:
+        score = int(values.get(name, 1))
+        count = int(counts.get(name, 1))
+        avg = score / count
+        avg_scores[name] = max(avg, 0.1) # corner cas: when the first vote is a down vote, that component will NEVER be selected again -> solution: ave score to be at least of 0.1
+    print("3️⃣", avg_scores)
 
     # do a weighted random selection:
 
