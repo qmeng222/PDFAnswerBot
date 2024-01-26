@@ -17,7 +17,7 @@ from app.web.api import ( # from api.py file
 from app.chat.score import random_component_by_score # for picking the best rated chain components
 
 
-# pick the well rated components:
+# select a combination of chain components with high ratings using weighted random selection:
 def select_component(
     component_type,
     component_map,
@@ -32,7 +32,7 @@ def select_component(
         # if this is NOT the first message of the conversation, I'll use the same builder again:
         builder = component_map[previous_component]
         return previous_component, builder(chat_args)
-    else: # otherwise, this is the first message of the conversation, and I need to pick a random combination to use:
+    else: # otherwise, this is the first message of the conversation, and I will do do a weighted random selection to pick the combination to use:
         random_name = random_component_by_score(component_type, component_map)
         builder = component_map[random_name]
         return random_name, builder(chat_args)
