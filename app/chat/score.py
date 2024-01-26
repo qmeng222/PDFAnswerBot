@@ -59,15 +59,6 @@ def score_conversation(
 
 def get_scores():
     """
-    Retrieves and organizes scores from the langfuse client for different component types and names.
-    The scores are categorized and aggregated in a nested dictionary format where the outer key represents
-    the component type and the inner key represents the component name, with each score listed in an array.
-
-    The function accesses the langfuse client's score endpoint to obtain scores.
-    If the score name cannot be parsed into JSON, it is skipped.
-
-    :return: A dictionary organized by component type and name, containing arrays of scores.
-
     Example:
 
         {
@@ -79,5 +70,17 @@ def get_scores():
             'memory': { 'persist_memory': [score7, score8] }
         }
     """
+    aggregate = {"llm": {}, "retriever": {}, "memory": {}}
 
-    pass
+    for component_type in aggregate.keys():
+        values = client.hgetall(f"{component_type}_score_values") # a dict
+        counts = client.hgetall(f"{component_type}_score_counts") # a dict
+
+        names = values.keys()
+        for name in names:
+            score = int(values.get(name, 1))
+            count = int(counts.get(name, 1))
+            avg = score / count
+            aggregate[component_type][name] = [avg]
+
+    return aggregate
