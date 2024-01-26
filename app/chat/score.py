@@ -1,23 +1,21 @@
+from app.chat.redis import client # import Redis client from the redis.py file
+
+
 def score_conversation(
     conversation_id: str, score: float, llm: str, retriever: str, memory: str
 ) -> None:
-    """
-    This function interfaces with langfuse to assign a score to a conversation, specified by its ID.
-    It creates a new langfuse score utilizing the provided llm, retriever, and memory components.
-    The details are encapsulated in JSON format and submitted along with the conversation_id and the score.
+    score = min(max(score, 0), 1) # at least 0 & at most 1
 
-    :param conversation_id: The unique identifier for the conversation to be scored.
-    :param score: The score assigned to the conversation.
-    :param llm: The Language Model component information.
-    :param retriever: The Retriever component information.
-    :param memory: The Memory component information.
+    # (hash increment by) increment the value of a field (llm) within a Redis hash:
+    # (the name of the Redis hash, the field within the hash whose value you want to increment, the value associated with the field in the hash will be incremented)
+    client.hincrby("llm_score_values", llm, score)
+    client.hincrby("llm_score_counts", llm, 1)
 
-    Example Usage:
+    client.hincrby("retriever_score_values", retriever, score)
+    client.hincrby("retriever_score_counts", retriever, 1)
 
-    score_conversation('abc123', 0.75, 'llm_info', 'retriever_info', 'memory_info')
-    """
-
-    pass
+    client.hincrby("memory_score_values", memory, score)
+    client.hincrby("memory_score_counts", memory, 1)
 
 
 def get_scores():

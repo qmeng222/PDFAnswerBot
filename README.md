@@ -29,9 +29,12 @@
     `streaming` controls how OpenAI responds to LangChain, and the way to call the model controls how OpenAI resonds to LangChain + how LangChain responds to the user:
     ![transmission of a response](images/streaming_response.png)
   - Random component parts in retrieval chain:
-    ![random component parts in retrieval chain](images/random_variations_of_component_parts.png)
+    ![random component parts in retrieval chain](images/random_variations_of_component_pa![Alt text](https://file%252B.vscode-resource.vscode-cdn.net/Users/qingyingmeng/Desktop/side-projects/PDFAnswerBot/images/random_variations_of_component_parts.png)rts.png)
   - The retrieval chain component maps:
     ![retrieval chain component maps](images/component_maps.png)
+  - Self-improving text generation by collecting user feedback:
+    ![self-improving text generation by collecting user feedback](images/collecting_user_feedback.png)
+    ![calculate the ave feedback scores and stored within Redis](images/Redis_calc_ave_feedback_score.png)
 
 ## Setup:
 
@@ -63,6 +66,13 @@ There are 3 separate processes that need to be running for the app to work:
 
   # (only if needed) terminate a process:
   kill <PID>
+
+  # (only if needed) connect to the Redis instance:
+  redis-cli
+
+  # (only if needed) retrieve all info from a specific hash using the 'hash get all' command:
+  HGETALL <key> # eg: HGETALL llm_score_counts
+
   ```
 
 - invoke the worker: `inv devworker`
