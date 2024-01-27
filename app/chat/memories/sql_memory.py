@@ -1,30 +1,5 @@
-from pydantic import BaseModel
-from langchain.memory import ConversationBufferMemory
-from langchain.schema import BaseChatMessageHistory
-from app.web.api import (
-    get_messages_by_conversation_id,
-    add_message_to_conversation
-)
-
-# extend BaseChatMessageHistory and pedantic BaseModel:
-class SqlMessageHistory(BaseChatMessageHistory, BaseModel):
-    conversation_id: str # the id for all conversations for a particular PDF
-
-    @property
-    # find all messages in db for a particular conversation_id:
-    def messages(self):
-        return get_messages_by_conversation_id(self.conversation_id)
-
-    # add a message to the database:
-    def add_message(self, message):
-        return add_message_to_conversation(
-            conversation_id=self.conversation_id,
-            role=message.type,
-            content=message.content
-        )
-
-    def clear(self):
-        pass
+from langchain.memory import ConversationBufferMemory # import class from module
+from app.chat.memories.histories.sql_history import SqlMessageHistory # import class from file
 
 def build_memory(chat_args): # chat_args is an obj containing info related to a conversation
     # return the initialized ConversationBufferMemory object (for storing conversation history):

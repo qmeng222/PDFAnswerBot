@@ -13,29 +13,6 @@
     - Vector database: Pinecone
 - Overview:
 
-  - App workflow:
-    ![app workflow](images/PDFAnswerBot_workflow.png)
-  - The Python server:
-    ![Python server](images/python_server.png)
-  - Converational QA chain:
-    ![converational QA chain](images/conversational_QA_chain.png)
-  - Persistent message storage:
-    ![persistent message storage](images/store_msgs_in_db.png)
-  - Conversational retrieval chain:
-    ![conversational retrieval chain](images/conversational_retrieval_chain1.png)
-    ![conversational retrieval chain](images/conversational_retrieval_chain2.png)
-  - Streaming text generation:
-    ![streaming text generation](images/streaming_text_generation.png)
-    `streaming` controls how OpenAI responds to LangChain, and the way to call the model controls how OpenAI resonds to LangChain + how LangChain responds to the user:
-    ![transmission of a response](images/streaming_response.png)
-  - Random component parts in retrieval chain:
-    ![random component parts in retrieval chain](images/random_variations_of_component_pa![Alt text](https://file%252B.vscode-resource.vscode-cdn.net/Users/qingyingmeng/Desktop/side-projects/PDFAnswerBot/images/random_variations_of_component_parts.png)rts.png)
-  - The retrieval chain component maps:
-    ![retrieval chain component maps](images/component_maps.png)
-  - Self-improving text generation by collecting user feedback:
-    ![self-improving text generation by collecting user feedback](images/collecting_user_feedback.png)
-    ![calculate the ave feedback scores and stored within Redis](images/Redis_calc_ave_feedback_score.png)
-
 ## Setup:
 
 1. (For project isolation) create & activate a virtual environment (dependencies are installed within the virtual environment other than system-wide & all subsequent steps will be performed within the virtual environment):
@@ -49,7 +26,7 @@
 <!-- Start the file upload server with `python app.py` -->
 5. Install Redis on the macOS system using Homebrew: `brew install redis`
 
-## Running the app
+## Running the app:
 
 There are 3 separate processes that need to be running for the app to work:
 ![background jobs](images/background_jobs.png)
@@ -84,6 +61,33 @@ If you need to stop them, select the terminal window the process is running in a
 To reset the database: `flask --app app.web init-db`
 
 Start by creating an account using the following credentials for example: email `user@test.com`, password `abc123`
+
+## Structure & concepts:
+
+- App workflow:
+  ![app workflow](images/PDFAnswerBot_workflow.png)
+- The Python server:
+  ![Python server](images/python_server.png)
+- Converational QA chain:
+  ![converational QA chain](images/conversational_QA_chain.png)
+- Persistent message storage:
+  ![persistent message storage](images/store_msgs_in_db.png)
+- Conversational retrieval chain:
+  ![conversational retrieval chain](images/conversational_retrieval_chain1.png)
+  ![conversational retrieval chain](images/conversational_retrieval_chain2.png)
+- Streaming text generation:
+  ![streaming text generation](images/streaming_text_generation.png)
+  `streaming` controls how OpenAI responds to LangChain, and the way to call the model controls how OpenAI resonds to LangChain + how LangChain responds to the user:
+  ![transmission of a response](images/streaming_response.png)
+- Random component parts in retrieval chain:
+  ![random component parts in retrieval chain](images/random_variations_of_component_pa![Alt text](https://file%252B.vscode-resource.vscode-cdn.net/Users/qingyingmeng/Desktop/side-projects/PDFAnswerBot/images/random_variations_of_component_parts.png)rts.png)
+- The retrieval chain component maps:
+  ![retrieval chain component maps](images/component_maps.png)
+- Self-improving text generation by collecting user feedback:
+  ![self-improving text generation by collecting user feedback](images/collecting_user_feedback.png)
+  ![calculate the ave feedback scores and stored within Redis](images/Redis_calc_ave_feedback_score.png)
+- Conversation buffer window memory:
+  ![conversation buffer window memory](images/conversation_buffer_window_memory.png)
 
 ## Resources:
 
