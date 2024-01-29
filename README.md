@@ -11,6 +11,7 @@
     - Asynchronous job queue: Celery (Python specific)
     - Message broker: Redis
     - Vector database: Pinecone
+    - Tracing & debugging: Langfuse
 - Overview:
 
 ## Setup:
@@ -97,3 +98,6 @@ Start by creating an account using the following credentials for example: email 
 4. [Pinecone Documentation](https://docs.pinecone.io/)
 5. [Pinecone Examples](https://docs.pinecone.io/page/examples)
 6. [Pinecone AI Support](https://support.pinecone.io/hc/en-us)
+7. [Langfuse | Quickstart](https://langfuse.com/docs/get-started)
+8. [Langfuse | Self-Hosting Guide](https://langfuse.com/docs/deployment/self-host)
+9. [Self-hosted Langfuse](https://prod-langfuse.fly.dev/)

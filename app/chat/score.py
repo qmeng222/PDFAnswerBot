@@ -7,7 +7,7 @@ def random_component_by_score(component_type, component_map):
     if component_type not in ["llm", "retriever", "memory"]:
         raise ValueError("Invalid component_type")
 
-    print("1️⃣", component_type)
+    # print("1️⃣", component_type)
 
     # (from Redis) get all k-v pairs of the hash containing the score total for the given commponent_type:
     # hash name: llm/retriever/memory_score_values
@@ -15,7 +15,7 @@ def random_component_by_score(component_type, component_map):
     # (from Redis) get all k-v pairs of the hash containing the score count for the given component_type:
     counts = client.hgetall(f"{component_type}_score_counts") # `counts` is a dict
 
-    print("2️⃣", values, counts) # NOTE: the values of the dict are in string type
+    # print("2️⃣", values, counts) # NOTE: the values of the dict are in string type
 
     # get all the valid component names (keys) from the component map:
     names = component_map.keys()
@@ -27,7 +27,7 @@ def random_component_by_score(component_type, component_map):
         count = int(counts.get(name, 1))
         avg = score / count
         avg_scores[name] = max(avg, 0.1) # corner cas: when the first vote is a down vote, that component will NEVER be selected again -> solution: ave score to be at least of 0.1
-    print("3️⃣", avg_scores)
+    # print("3️⃣", avg_scores)
 
     # do a weighted random selection:
     sum_scores = sum(avg_scores.values())
