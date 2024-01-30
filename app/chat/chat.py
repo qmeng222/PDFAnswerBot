@@ -15,8 +15,8 @@ from app.web.api import ( # from api.py file
     get_conversation_components
 )
 from app.chat.score import random_component_by_score # for picking the best rated chain components
-from app.chat.tracing.langfuse import langfuse # import the langfuse client from the flanfuse.py file
-from langfuse.model import CreateTrace # import the class from the langfuse.model module for creating a trace object (which captures detailed logs of prompts, actions, outputs and feedback)
+# from app.chat.tracing.langfuse import langfuse # import the langfuse client from the flanfuse.py file
+# from langfuse.model import CreateTrace # import the class from the langfuse.model module for creating a trace object (which captures detailed logs of prompts, actions, outputs and feedback)
 
 # select a combination of chain components with high ratings using weighted random selection:
 def select_component(
@@ -70,20 +70,13 @@ def build_chat(chat_args: ChatArgs):
 
     condense_question_llm = ChatOpenAI(streaming=False)
 
-    # initiate a new trace within Langfuse's observability system:
-    trace = langfuse.trace(
-        CreateTrace(
-            id=chat_args.conversation_id,
-            metadata=chat_args.metadata
-        )
-    )
-
     return StreamingConversationalRetrievalChain.from_llm(
         llm=llm,
         condense_question_llm=condense_question_llm,
         memory=memory,
         retriever=retriever,
-        callbacks=[trace.getNewHandler()]
+        # callbacks=[trace.getNewHandler()]
+        metadata=chat_args.metadata
     )
 
     """
