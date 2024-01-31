@@ -1,6 +1,6 @@
 # PDFAnswerBot
 
-## About:
+## Overview:
 
 - Description: AI-powered question answering for PDFs with user feedback.
 - Tech stack:
@@ -12,7 +12,8 @@
     - Message broker: Redis
     - Vector database: Pinecone
     - Tracing & debugging: Langfuse
-- Overview:
+- Demo:
+  ![project demo](images/PDFAnswerBot_overview.gif)
 
 ## Setup:
 
